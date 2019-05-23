@@ -1,0 +1,21 @@
+{
+    "name": "sem-soft/google-sheets",
+    "description": "Wrapper for working with Official Google Sheets API through Google Client Library",
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "require": {
+        "php": ">=7.3.0",
+        "google/apiclient": "^2.0"
+    },
+    "authors": [
+        {
+            "name": "Samsonov Vladimir",
+            "email": "vs@chulakov.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "sem\\google-sheets\\": "src/"
+        }
+    }
+}
