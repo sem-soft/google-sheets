@@ -1,6 +1,6 @@
 <?php
 /**
- * Файл класса SheetWriter.php
+ * Файл класса Sheet.php
  *
  * @copyright Copyright (c) 2019, Oleg Chulakov Studio
  * @link http://chulakov.com/
@@ -12,7 +12,7 @@ namespace Sem\GoogleSheets;
  * Содержит логику для работы с данными листов Google-таблицы
  * @package Sem\GoogleSheets
  */
-class SheetWriter
+class Sheet
 {
 
     /**
@@ -38,7 +38,6 @@ class SheetWriter
     public function __construct(\Google_Client $client, string $tableId)
     {
         $this->tableId = $tableId;
-        $client->addScope(\Google_Service_Sheets::SPREADSHEETS);
         $this->serviceSheets = new \Google_Service_Sheets($client);
         $this->serviceSheetsValueRange = new \Google_Service_Sheets_ValueRange();
     }
@@ -68,6 +67,11 @@ class SheetWriter
         );
     }
 
+    public function clearRange()
+    {
+
+    }
+
     /**
      * Подготавливает диапазон значений для вставки
      * @param array $data
@@ -76,7 +80,7 @@ class SheetWriter
     protected function getValuedRange(array $data): \Google_Service_Sheets_ValueRange
     {
         $this->serviceSheetsValueRange->setValues([
-            'values' => $data
+            'values' => array_values($data)
         ]);
 
         return $this->serviceSheetsValueRange;
