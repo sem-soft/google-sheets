@@ -89,10 +89,10 @@ class Writer
 
             foreach ($rows as $row) {
                 $valuedRange = $this->getValuedRange($row);
-                $valuedRange->setRange($this->sheet->getFullRangeAddress($fromColumn . ($fromRow++)));
-                $data[] = $valuedRange;
+                $valuedRange->setRange($this->sheet->getFullRangeAddress($fromColumn . $fromRow));
+                $data[] = clone $valuedRange;
+                $fromRow++;
             }
-
             $batch = new \Google_Service_Sheets_BatchUpdateValuesRequest();
             $batch->setData($data);
             $batch->setValueInputOption('USER_ENTERED');
