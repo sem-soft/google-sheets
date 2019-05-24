@@ -36,7 +36,6 @@ class ServiceAccountAuthenticator
         // Установка параметра GOOGLE_APPLICATION_CREDENTIALS для авторизации
         putenv(CredentialsLoader::ENV_VAR . "={$credentialsPath}");
         $client->useApplicationDefaultCredentials();
-        $client->addScope(\Google_Service_Sheets::SPREADSHEETS);
         return $client;
     }
 }
