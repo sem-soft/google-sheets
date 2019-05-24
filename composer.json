@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "sem\\google-sheets\\": "src/"
+            "Sem\\GoogleSheets\\": "src/"
         }
     }
 }
