@@ -75,7 +75,7 @@ class SheetWriter
      */
     protected function getValuedRange(array $data): \Google_Service_Sheets_ValueRange
     {
-        $this->serviceSheetsValueRange->offsetExists([
+        $this->serviceSheetsValueRange->setValues([
             'values' => $data
         ]);
 
