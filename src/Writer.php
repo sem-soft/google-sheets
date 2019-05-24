@@ -61,14 +61,14 @@ class Writer
      *     'key3' => 'Some value 2',
      * ]);
      * ```
-     * @param array $data
+     * @param array $row
      */
-    public function insertRow(string $fromCell, array $data): void
+    public function insertRow(string $fromCell, array $row): void
     {
         $this->serviceSheets->spreadsheets_values->update(
             $this->book->getId(),
             $this->sheet->getFullRangeAddress($fromCell),
-            $this->getValuedRange($data),
+            $this->getValuedRange($row),
             [
                 'valueInputOption' => 'USER_ENTERED',
             ]
@@ -76,10 +76,39 @@ class Writer
     }
 
     /**
+     * Производит вставку множества строк начиная с опредленного столбца и строки
      *
-     * @param string $range диапазон для отчистки
+     * @param string $fromColumn столбец, с которого начинать вставку, например `'F'`
+     * @param int $fromRow номер строки, с которой начинат вставку, например  `5`
+     * @param array $rows
      */
-    public function clearRange(string $range): void
+    public function insertRows(string $fromColumn, int $fromRow,  array $rows): void
+    {
+        if (!empty($rows)) {
+            $data = [];
+
+            foreach ($rows as $row) {
+                $valuedRange = $this->getValuedRange($row);
+                $valuedRange->setRange($this->sheet->getFullRangeAddress($fromColumn . ($fromRow++)));
+                $data[] = $valuedRange;
+            }
+
+            $batch = new \Google_Service_Sheets_BatchUpdateValuesRequest();
+            $batch->setData($data);
+            $batch->setValueInputOption('USER_ENTERED');
+
+            $this->serviceSheets->spreadsheets_values->batchUpdate(
+                $this->book->getId(),
+                $batch
+            );
+        }
+    }
+
+    /**
+     * Производит очистку указанного диапазона ячеек
+     * @param string $range диапазон для отчистки, например `'A2:I26'`
+     */
+    public function clear(string $range): void
     {
         $this->serviceSheets->spreadsheets_values->clear(
             $this->book->getId(),
