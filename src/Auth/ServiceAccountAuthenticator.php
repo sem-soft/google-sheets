@@ -26,7 +26,7 @@ class ServiceAccountAuthenticator
      * @return \Google_Client
      * @throws CredentialPathException
      */
-    public function prepareClient(\Google_Client $client, $credentialsPath): \Google_Client
+    public function setAuth(\Google_Client $client, $credentialsPath): \Google_Client
     {
 
         if (!file_exists($credentialsPath)) {
