@@ -31,7 +31,7 @@ class Sheet
      * Устанавливает наименование листа
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }

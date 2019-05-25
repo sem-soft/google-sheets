@@ -31,7 +31,7 @@ class Book
      * Устанавливает уникальный идентификатор книги
      * @param string $id
      */
-    public function setId(string $id)
+    public function setId(string $id): void
     {
         $this->id = $id;
     }

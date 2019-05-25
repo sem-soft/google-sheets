@@ -122,7 +122,7 @@ class Writer
      * @param string $cell например, `'A1'`
      * @param string $value
      */
-    public function cell(string $cell, string $value)
+    public function cell(string $cell, string $value): void
     {
         $this->serviceSheets->spreadsheets_values->update(
             $this->book->getId(),
