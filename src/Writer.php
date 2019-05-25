@@ -118,14 +118,31 @@ class Writer
     }
 
     /**
+     * Устанавливает значение ячейки по ее адресу
+     * @param string $cell например, `'A1'`
+     * @param string $value
+     */
+    public function cell(string $cell, string $value)
+    {
+        $this->serviceSheets->spreadsheets_values->update(
+            $this->book->getId(),
+            $this->sheet->getFullRangeAddress($cell),
+            $this->getValuedRange($value),
+            [
+                'valueInputOption' => 'USER_ENTERED',
+            ]
+        );
+    }
+
+    /**
      * Подготавливает диапазон значений для вставки
-     * @param array $data
+     * @param array|string $data
      * @return \Google_Service_Sheets_ValueRange
      */
-    protected function getValuedRange(array $data): \Google_Service_Sheets_ValueRange
+    protected function getValuedRange($data): \Google_Service_Sheets_ValueRange
     {
         $this->serviceSheetsValueRange->setValues([
-            'values' => array_values($data)
+            'values' => is_array($data) ? array_values($data) : (string) $data
         ]);
 
         return $this->serviceSheetsValueRange;
